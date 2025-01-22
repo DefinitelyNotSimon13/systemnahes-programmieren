@@ -1,0 +1,24 @@
+services:
+  build_env:
+    build: .
+    volumes:
+      - ./output:/app/output
+    command: >
+      bash -c "
+        cp /app/build-cortex-m0/testApp.elf /app/output
+      "
+
+  qemu_env:
+    build: .
+    depends_on: 
+      - build_env
+    volumes:
+      - ./output:/app/output
+    ports:
+      - "1234:1234"
+    command: >
+      bash -c "
+        qemu-system-arm -machine microbit -device loader,file=output/testApp.elf -s -S -nographic
+      "
+
+
