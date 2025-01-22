@@ -43,6 +43,9 @@ void uart_init()
 
   // Fire the START event for the Receiver: ---------------------------------
   register_write((UART_BASE_ADDRESS + UART_STARTRX), UART_TASK_START);
+
+  // enable interrupt?
+  // register_write((UART_BASE_ADDRESS | UART_INTENSET), 4);
 }
 
 void uart_writeByte(uint8_t data)
@@ -114,6 +117,8 @@ uint8_t uart_readByte()
 
 uint8_t uart_readByteBlocking()
 {
+  while (register_read(UART_BASE_ADDRESS | UART_RXDRDY) == 0) {}
+  return register_read((UART_BASE_ADDRESS | UART_RXDRDY));
 
   // TODO: Maybe this is a good idea ?
   // OR

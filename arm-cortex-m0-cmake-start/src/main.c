@@ -13,7 +13,15 @@ int main(void)
   uart_writeLine("Printing number received from rng device...");
   for (;;)
   {
-    const uint8_t randomNumber = rng_getRandomValue_waiting();
-    uart_writeUint8(randomNumber);
+    uint8_t readByte = uart_readByte();
+    if (readByte == 0)
+    {
+      continue;
+    } else
+    {
+      uart_writeByte(readByte);
+    }
+    // const uint8_t randomNumber = rng_getRandomValue_waiting();
+    // uart_writeUint8(randomNumber);
   }
 }
