@@ -9,10 +9,10 @@
  *
  * This is done by writing a `1` to the `START_TASK` of the RNG peripheral.
  */
-void rng_init( void )
+void rng_init(void)
 {
   // Write a '1' to the Start Task, to start the generation of random numbers
-  register_write( ( RNG_BASE_ADDRESS | RNG_START ), RNG_TASK_START );
+  register_write((RNG_BASE_ADDRESS | RNG_START), RNG_TASK_START);
 }
 
 
@@ -23,10 +23,10 @@ void rng_init( void )
  *
  * @return uint8_t random byte
  */
-uint8_t rng_getRandomValue_immediately( void )
+uint8_t rng_getRandomValue_immediately(void)
 {
   // Read 32-Bit Register containing the RNG Value
-  uint32_t randomValue = register_read( ( RNG_BASE_ADDRESS | RNG_VALUE ) );
+  uint32_t randomValue = register_read((RNG_BASE_ADDRESS | RNG_VALUE));
 
   // its actual just 8-Bit, so cast it.
   return (uint8_t)randomValue;
@@ -49,15 +49,15 @@ static volatile uint32_t notReadyCount = 0U;
 uint8_t rng_getRandomValue_waiting()
 {
   uint32_t notReadyCountLocal = 0U;
-  for (
-    volatile uint32_t valueReady = register_read( ( RNG_BASE_ADDRESS | RNG_VALRDY ) );
-    valueReady == 0U;
-    valueReady = register_read( ( RNG_BASE_ADDRESS | RNG_VALRDY ) ) )
+  for (volatile uint32_t valueReady =
+         register_read((RNG_BASE_ADDRESS | RNG_VALRDY));
+       valueReady == 0U;
+       valueReady = register_read((RNG_BASE_ADDRESS | RNG_VALRDY)))
   {
     ++notReadyCountLocal;
   }
 
-  if ( notReadyCount < notReadyCountLocal )
+  if (notReadyCount < notReadyCountLocal)
   {
     notReadyCount = notReadyCountLocal;
   }

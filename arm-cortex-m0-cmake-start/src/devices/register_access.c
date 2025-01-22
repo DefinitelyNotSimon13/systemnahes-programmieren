@@ -16,7 +16,7 @@
 void register_write(uint32_t address, uint32_t value)
 {
   // Assign pointer to given address:
-  uint32_t * const pointer_to_address = (uint32_t *)address;
+  uint32_t *const pointer_to_address = (uint32_t *)address;
 
   // Write to the End of the Pointer
   *pointer_to_address = value;
@@ -25,7 +25,7 @@ void register_write(uint32_t address, uint32_t value)
 uint32_t register_read(uint32_t address)
 {
   // Assign pointer to given address:
-  uint32_t const * const pointer_to_address = (uint32_t *)address;
+  uint32_t const *const pointer_to_address = (uint32_t *)address;
 
   // Read from the End of the Pointer
   const uint32_t value = *pointer_to_address;

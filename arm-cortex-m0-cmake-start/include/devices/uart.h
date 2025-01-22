@@ -41,6 +41,9 @@
 #define UART_EVENT_TRIGGER     1    // Value for setting/starting an Event
 #define UART_EVENT_CLEAR       0    // Value for clearing/stopping an Event
 
+// Ascii:
+#define ASCII_NUMBER_OFFSET 48
+
 // C Function Definitions -----------------------------------------------------
 
 /**
@@ -56,9 +59,14 @@ void uart_init();
  */
 void uart_writeByte(uint8_t data);
 
+void uart_writeLine(const char* data);
+
+void uart_writeUint8(uint8_t number);
+
 /**
  * @brief Read/Receive a byte from the serial Port
  * 
  * @return uint8_t received Byte or 0 (zero) if nothing was received
  */
 uint8_t uart_readByte();
+

@@ -18,6 +18,7 @@
         devShell = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
             gcc-arm-embedded
+            qemu_full
             gdb
             cmake
           ];
