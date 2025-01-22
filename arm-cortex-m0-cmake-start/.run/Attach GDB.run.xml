@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Attach GDB" type="CLion_Remote" version="1" remoteCommand="tcp::1234" symbolFile="$PROJECT_DIR$/output/testApp.elf" sysroot="">
+    <debugger kind="GDB" isBundled="true" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build and Run Qemu" run_configuration_type="docker-deploy" />
+    </method>
+  </configuration>
+</component>
