@@ -1,27 +1,32 @@
-//
-// Created by infohoschie on 09.12.24.
-//
+#include "devices/random.h"
+#include "devices/uart.h"
+#include "devices/timer.h"
 
-#include "random.h"
-#include "uart.h"
+#include <stdbool.h>
 
-int main(void)
+
+static void timerTest( void );
+
+int main( void )
 {
-  uart_init();
-  rng_init();
 
-  uart_writeLine("Printing number received from rng device...");
-  for (;;)
-  {
-    uint8_t readByte = uart_readByte();
-    if (readByte == 0)
-    {
-      continue;
-    } else
-    {
-      uart_writeByte(readByte);
-    }
-    // const uint8_t randomNumber = rng_getRandomValue_waiting();
-    // uart_writeUint8(randomNumber);
-  }
+  uart_init();
+  uart_writeLine( "Hello World!\n" );
+
+  timerTest();
+}
+
+static void timerTest( void )
+{
+  timer_init( TIMER0 );
+
+  timer_captureCompareSet( TIMER0, CC0, 0, false );
+
+  timer_start( TIMER0 );
+
+  timer_capture( TIMER0, CC0 );
+
+  const uint32_t captureValue = timer_captureCompareGet( TIMER0, CC0 );
+
+  uart_writeUint8( captureValue );
 }

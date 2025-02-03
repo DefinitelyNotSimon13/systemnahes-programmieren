@@ -54,15 +54,15 @@ void uart_writeByte(uint8_t data)
   // write the data to the TXD register
   register_write((UART_BASE_ADDRESS + UART_TXD), data);
 
-  // need to "wait" until its transmited
+  // need to "wait" until its transmitted
 }
 
-void uart_writeLine(const char *str)
+void uart_writeLine(const char *data)
 {
-  while (*str != '\0')
+  while (*data != '\0')
   {
-    uart_writeByte(*str);
-    str++;
+    uart_writeByte(*data);
+    data++;
   }
   uart_writeByte('\n');
 }
@@ -94,7 +94,7 @@ uint8_t uart_readByte()
 {
 
   // if not ready, return 0
-  uint32_t receiveIsReady = register_read((UART_BASE_ADDRESS + UART_RXDRDY));
+  const uint32_t receiveIsReady = register_read((UART_BASE_ADDRESS + UART_RXDRDY));
 
   if (receiveIsReady)
   {

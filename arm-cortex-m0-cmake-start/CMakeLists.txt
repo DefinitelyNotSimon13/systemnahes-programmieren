@@ -12,7 +12,6 @@ target_sources(
         testApp
         PRIVATE
         entry/entry.S
-        entry/entry_c.h
         entry/entry_c.c
         src/main.c
         src/misc/var_test_1.c
@@ -22,6 +21,7 @@ target_sources(
         src/devices/register_access.c
         src/devices/random.c
         src/devices/uart.c
+        src/devices/timer.c
 )
 
 target_include_directories(
