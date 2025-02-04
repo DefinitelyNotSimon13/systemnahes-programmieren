@@ -3,6 +3,7 @@
 #include "uart.h"
 #include "register_access.h"
 
+#include <nvic.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -45,7 +46,17 @@ void uart_init()
   register_write((UART_BASE_ADDRESS + UART_STARTRX), UART_TASK_START);
 
   // enable interrupt?
-  // register_write((UART_BASE_ADDRESS | UART_INTENSET), 4);
+  register_write((UART_BASE_ADDRESS | UART_INTENSET), 4);
+  register_write(Interrupt_Set_Enable, Interrupt_ID2);
+}
+
+void Interrupt2_Handler()
+{
+  register_write(UART_BASE_ADDRESS | UART_RXDRDY, 0);
+  register_write(Interrupt_ICPR, Interrupt_ID2);
+
+  uart_writeLine("Interrupt");
+
 }
 
 void uart_writeByte(uint8_t data)
@@ -67,10 +78,10 @@ void uart_writeLine(const char *data)
   uart_writeByte('\n');
 }
 
-void uart_writeUint8(uint8_t number)
+void uart_writeUint32(uint32_t number)
 {
   char buf[3];
-  uint8_t i = 0;
+  uint32_t i = 0;
 
   // Write digits to buffer
   // directly printing each digit would make this function shorter,
@@ -90,7 +101,7 @@ void uart_writeUint8(uint8_t number)
   uart_writeByte('\n');
 }
 
-uint8_t uart_readByte()
+uint32_t uart_readByte()
 {
 
   // if not ready, return 0

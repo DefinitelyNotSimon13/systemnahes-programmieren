@@ -5,6 +5,8 @@
 
 #include "register_access.h"
 
+#include <uart.h>
+
 static const uint32_t TimerBase[3] =
 {
   TIMER0_BASE_ADDRESS,
@@ -36,6 +38,13 @@ static const uint32_t TimerCaptureTaskOffset[4] =
     TIMER_CAPTURE_3
 };
 
+void Interrupt8_Handler()
+{
+  register_write(TIMER0_BASE_ADDRESS | TIMER_COMPARE_0, 0);
+  register_write(Interrupt_ICPR, Interrupt_ID8);
+  uart_writeLine(".");
+}
+
 void timer_init( Timer const timer )
 {
   // Init Timer with an interval of ~4sek
@@ -55,7 +64,7 @@ void timer_init_detailed( Timer const timer, uint8_t const prescaler, TimerMode 
   // BitMode
   register_write(timerBase | TIMER_BITMODE , (uint32_t)bitMode );
 
-#if 0
+#if 1
   // Enable Interrupt
   register_write((TIMER0_BASE_ADDRESS + TIMER_INTENSET), INT_COMPARE0); // Interrupt on Compare[0]
 

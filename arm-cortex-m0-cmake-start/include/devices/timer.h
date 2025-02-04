@@ -87,6 +87,8 @@ typedef enum TimerCaptureCompare {
 
 // C Function Definitions -----------------------------------------------------
 
+void Interrupt8_Handler();
+
 /**
  * @brief Default Initialisation of Timer.
  *

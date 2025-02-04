@@ -46,6 +46,7 @@
 
 // C Function Definitions -----------------------------------------------------
 
+void Interrupt2_Handler();
 /**
  * @brief Initializing the UART with the following Settings:
  * 115200-8-N-1
@@ -61,12 +62,12 @@ void uart_writeByte(uint8_t data);
 
 void uart_writeLine(const char* data);
 
-void uart_writeUint8(uint8_t number);
+void uart_writeUint32(uint32_t number);
 
 /**
  * @brief Read/Receive a byte from the serial Port
  * 
  * @return uint8_t received Byte or 0 (zero) if nothing was received
  */
-uint8_t uart_readByte();
+uint32_t uart_readByte();
 
